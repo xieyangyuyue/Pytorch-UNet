@@ -1,5 +1,6 @@
 *.pyc
 data/
+outputs/
 __pycache__/
 checkpoints/
 *.pth
