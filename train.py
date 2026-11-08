@@ -27,8 +27,7 @@ from pathlib import Path
 from torch import optim
 # 导入数据加载器和数据集划分工具
 from torch.utils.data import DataLoader, random_split
-# 导入进度条
-from tqdm import tqdm
+
 
 # 导入 Weights & Biases 实验跟踪工具
 import wandb
@@ -40,6 +39,21 @@ from unet import UNet
 from utils.data_loading import BasicDataset, CarvanaDataset
 # 导入 Dice 损失函数
 from utils.dice_score import dice_loss
+
+USE_TQDM = True
+
+if USE_TQDM:
+    from tqdm import tqdm
+else:
+    class _SilentBar:
+        """接口兼容 tqdm，但不输出任何东西"""
+        def __init__(self, *args, **kwargs): pass
+        def __enter__(self): return self
+        def __exit__(self, *args): return False
+        def update(self, *args, **kwargs): pass
+        def set_postfix(self, *args, **kwargs): pass
+
+    tqdm = _SilentBar
 
 # 默认路径定义
 dir_img = Path('./data/imgs/')          # 训练图像目录

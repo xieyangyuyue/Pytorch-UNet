@@ -9,4 +9,5 @@ checkpoints/
 *.jpg
 venv/
 .idea/
+.openidea/
 wandb/
